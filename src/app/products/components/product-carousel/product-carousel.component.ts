@@ -1,32 +1,38 @@
-import { AfterViewInit, Component, ElementRef, input, viewChild } from '@angular/core';
-import { ProductImagePipe } from '@products/pipes/product.image.pipe';
-// import Swiper JS
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  input,
+  viewChild,
+} from '@angular/core';
+
 import Swiper from 'swiper';
-// import Swiper styles
+import { Navigation, Pagination } from 'swiper/modules';
+
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-
-import { Navigation, Pagination } from 'swiper/modules'
+import { ProductImagePipe } from '@products/pipes/product-image.pipe';
 
 @Component({
   selector: 'product-carousel',
   imports: [ProductImagePipe],
   templateUrl: './product-carousel.component.html',
   styles: `
-  .swiper{
-    width: 100%;
-    height: 500px;
-  }
-  `
+    .swiper {
+      width: 100%;
+      height: 500px;
+    }
+
+
+  `,
 })
 export class ProductCarouselComponent implements AfterViewInit {
-
-  images = input.required<string[]>()
-  swipperDiv = viewChild.required<ElementRef>('swipperDiv')
+  images = input.required<string[]>();
+  swiperDiv = viewChild.required<ElementRef>('swiperDiv');
 
   ngAfterViewInit(): void {
-    const element = this.swipperDiv().nativeElement;
+    const element = this.swiperDiv().nativeElement;
     if (!element) return;
 
     const swiper = new Swiper(element, {
@@ -34,9 +40,7 @@ export class ProductCarouselComponent implements AfterViewInit {
       direction: 'horizontal',
       loop: true,
 
-      modules: [
-        Navigation, Pagination
-      ],
+      modules: [Navigation, Pagination],
 
       // If we need pagination
       pagination: {
@@ -55,7 +59,4 @@ export class ProductCarouselComponent implements AfterViewInit {
       },
     });
   }
-
-
-
 }
